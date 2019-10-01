@@ -5,15 +5,19 @@
   
 
   
-  <title>zzh&#39;s blogs</title>
+  <title>小议 C++ STL 第二级配置器 | zzh&#39;s blogs</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="zzh&#39;s blogs">
-<meta property="og:url" content="http://zzzzzzh.github.io/blog/index.html">
+  <meta name="description" content="我们知道，OS 分配内存是需要一定开销的，因此 stl 在实现 allocator 时采取了这样的方式：  对于大于 128bytes 的内存块，直接使用 malloc 和 free 来进行管理 对于小于等于 128bytes 的内存块，首先为了减小情况的复杂性，将内存块大小向上对齐到 8bytes，然后维护 $16$ 个链表，每次申请一定的（较大）空间，然后 stl 自己用内存池及链表等进行管理">
+<meta property="og:type" content="article">
+<meta property="og:title" content="小议 C++ STL 第二级配置器">
+<meta property="og:url" content="http://zzzzzzh.github.io/blog/2019/10/02/小议-C-STL-第二级配置器/index.html">
 <meta property="og:site_name" content="zzh&#39;s blogs">
+<meta property="og:description" content="我们知道，OS 分配内存是需要一定开销的，因此 stl 在实现 allocator 时采取了这样的方式：  对于大于 128bytes 的内存块，直接使用 malloc 和 free 来进行管理 对于小于等于 128bytes 的内存块，首先为了减小情况的复杂性，将内存块大小向上对齐到 8bytes，然后维护 $16$ 个链表，每次申请一定的（较大）空间，然后 stl 自己用内存池及链表等进行管理">
 <meta property="og:locale" content="zh-cn">
+<meta property="og:updated_time" content="2019-10-01T18:17:19.631Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="zzh&#39;s blogs">
+<meta name="twitter:title" content="小议 C++ STL 第二级配置器">
+<meta name="twitter:description" content="我们知道，OS 分配内存是需要一定开销的，因此 stl 在实现 allocator 时采取了这样的方式：  对于大于 128bytes 的内存块，直接使用 malloc 和 free 来进行管理 对于小于等于 128bytes 的内存块，首先为了减小情况的复杂性，将内存块大小向上对齐到 8bytes，然后维护 $16$ 个链表，每次申请一定的（较大）空间，然后 stl 自己用内存池及链表等进行管理">
   
     <link rel="alternate" href="/atom.xml" title="zzh&#39;s blogs" type="application/atom+xml">
   
@@ -60,9 +64,7 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-    <article id="post-小议-C-STL-第二级配置器" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-小议-C-STL-第二级配置器" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2019/10/02/小议-C-STL-第二级配置器/" class="article-date">
   <time datetime="2019-10-02T01:40:14.000Z" itemprop="datePublished">2019-10-02</time>
@@ -75,8 +77,8 @@
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/10/02/小议-C-STL-第二级配置器/">小议 C++ STL 第二级配置器</a>
+    <h1 class="article-title" itemprop="name">
+      小议 C++ STL 第二级配置器
     </h1>
   
 
@@ -109,11 +111,9 @@
     </footer>
   </div>
   
-</article>
-
-
+    
   
-
+</article>
 
 </section>
         
