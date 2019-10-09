@@ -55,17 +55,18 @@
   };
 </script>
 
-  <meta name="description" content="我们知道，OS 分配内存是需要一定开销的，因此 stl 在实现 allocator 时采取了这样的方式：  对于大于 128bytes 的内存块，直接使用 malloc 和 free 来进行管理 对于小于等于 128bytes 的内存块，首先为了减小情况的复杂性，将内存块大小向上对齐到 8bytes，然后维护 $16$ 个链表，每次申请一定的（较大）空间，然后 stl 自己用内存池及链表等进行管理">
+  <meta name="description" content="关于 union我们知道，OS 分配内存是需要一定开销的，因此 stl 在实现 allocator 时采取了这样的方式：  对于大于 128bytes 的内存块，直接使用 malloc 和 free 来进行管理 对于小于等于 128bytes 的内存块，首先为了减小情况的复杂性，将内存块大小向上对齐到 8bytes，然后维护 $16$ 个链表，每次申请一定的（较大）空间，然后 stl 自己用内存池">
+<meta name="keywords" content="C++,allocator">
 <meta property="og:type" content="article">
 <meta property="og:title" content="小议 C++ STL 第二级配置器">
 <meta property="og:url" content="http://zzzzzzh.github.io/blog/2019/10/02/小议-C-STL-第二级配置器/index.html">
 <meta property="og:site_name" content="zzh&#39;s blogs">
-<meta property="og:description" content="我们知道，OS 分配内存是需要一定开销的，因此 stl 在实现 allocator 时采取了这样的方式：  对于大于 128bytes 的内存块，直接使用 malloc 和 free 来进行管理 对于小于等于 128bytes 的内存块，首先为了减小情况的复杂性，将内存块大小向上对齐到 8bytes，然后维护 $16$ 个链表，每次申请一定的（较大）空间，然后 stl 自己用内存池及链表等进行管理">
+<meta property="og:description" content="关于 union我们知道，OS 分配内存是需要一定开销的，因此 stl 在实现 allocator 时采取了这样的方式：  对于大于 128bytes 的内存块，直接使用 malloc 和 free 来进行管理 对于小于等于 128bytes 的内存块，首先为了减小情况的复杂性，将内存块大小向上对齐到 8bytes，然后维护 $16$ 个链表，每次申请一定的（较大）空间，然后 stl 自己用内存池">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-10-09T04:55:55.903Z">
+<meta property="og:updated_time" content="2019-10-09T04:58:50.263Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="小议 C++ STL 第二级配置器">
-<meta name="twitter:description" content="我们知道，OS 分配内存是需要一定开销的，因此 stl 在实现 allocator 时采取了这样的方式：  对于大于 128bytes 的内存块，直接使用 malloc 和 free 来进行管理 对于小于等于 128bytes 的内存块，首先为了减小情况的复杂性，将内存块大小向上对齐到 8bytes，然后维护 $16$ 个链表，每次申请一定的（较大）空间，然后 stl 自己用内存池及链表等进行管理">
+<meta name="twitter:description" content="关于 union我们知道，OS 分配内存是需要一定开销的，因此 stl 在实现 allocator 时采取了这样的方式：  对于大于 128bytes 的内存块，直接使用 malloc 和 free 来进行管理 对于小于等于 128bytes 的内存块，首先为了减小情况的复杂性，将内存块大小向上对齐到 8bytes，然后维护 $16$ 个链表，每次申请一定的（较大）空间，然后 stl 自己用内存池">
   <link rel="canonical" href="http://zzzzzzh.github.io/blog/2019/10/02/小议-C-STL-第二级配置器/">
 
 
@@ -234,7 +235,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-10-09 04:55:55" itemprop="dateModified" datetime="2019-10-09T04:55:55+00:00">2019-10-09</time>
+                <time title="修改时间：2019-10-09 04:58:50" itemprop="dateModified" datetime="2019-10-09T04:58:50+00:00">2019-10-09</time>
               </span>
             
           
@@ -250,7 +251,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>我们知道，OS 分配内存是需要一定开销的，因此 stl 在实现 <code>allocator</code> 时采取了这样的方式：</p>
+        <h2 id="关于-union"><a href="#关于-union" class="headerlink" title="关于 union"></a>关于 union</h2><p>我们知道，OS 分配内存是需要一定开销的，因此 stl 在实现 <code>allocator</code> 时采取了这样的方式：</p>
 <ul>
 <li>对于大于 <code>128bytes</code> 的内存块，直接使用 <code>malloc</code> 和 <code>free</code> 来进行管理</li>
 <li>对于小于等于 <code>128bytes</code> 的内存块，首先为了减小情况的复杂性，将内存块大小向上对齐到 <code>8bytes</code>，然后维护 $16$ 个链表，每次申请一定的（较大）空间，然后 stl 自己用内存池及链表等进行管理</li>
@@ -263,6 +264,7 @@
 <li><a href="https://my.oschina.net/u/3281747/blog/875605" target="_blank" rel="noopener">浅析STL空间配置器</a></li>
 <li><a href="https://blog.csdn.net/w450468524/article/details/51649222" target="_blank" rel="noopener">STL空间配置器的union obj</a></li>
 </ul>
+<h2 id="关于-reallocate-中的-old-sz"><a href="#关于-reallocate-中的-old-sz" class="headerlink" title="关于 reallocate 中的 old_sz"></a>关于 <code>reallocate</code> 中的 <code>old_sz</code></h2><p>在看第一级配置器时还很迷惑为什么需要知道 <code>old_sz</code>，不过看完二级配置器后很快就能知道，为自己管理内存必须知道这个值。</p>
 
     </div>
 
@@ -273,6 +275,17 @@
       
 
       <footer class="post-footer">
+          
+            
+          
+          <div class="post-tags">
+            
+              <a href="/tags/C/" rel="tag"># C++</a>
+            
+              <a href="/tags/allocator/" rel="tag"># allocator</a>
+            
+          </div>
+        
 
         
 
@@ -320,6 +333,8 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#关于-union"><span class="nav-number">1.</span> <span class="nav-text">关于 union</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关于-reallocate-中的-old-sz"><span class="nav-number">2.</span> <span class="nav-text">关于 reallocate 中的 old_sz</span></a></li></ol></div>
+        
       </div>
       <!--/noindex-->
 
@@ -337,6 +352,15 @@
           <span class="site-state-item-count">1</span>
           <span class="site-state-item-name">日志</span>
         </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">标签</span>
+        
       </div>
     
   </nav>
@@ -418,6 +442,56 @@
 
   
 
+  
+    
+      
+<script type="text/x-mathjax-config">
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') {
+          next = next.nextSibling;
+        }
+        if (next && next.nodeName.toLowerCase() === 'br') {
+          next.parentNode.removeChild(next);
+        }
+      }
+    });
+  });
+
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      element = document.getElementById(all[i].inputID + '-Frame').parentNode;
+      if (element.nodeName.toLowerCase() == 'li') {
+        element = element.parentNode;
+      }
+      element.classList.add('has-jax');
+    }
+  });
+</script>
+<script>
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML', () => {
+    MathJax.Hub.Typeset();
+  }, window.MathJax);
+</script>
+
+    
   
 
   
