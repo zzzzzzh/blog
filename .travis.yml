@@ -2,16 +2,11 @@ sudo: false
 language: node_js
 node_js:
   - 10 # use nodejs v10 LTS
-cache:
-  - npm
-  - hexo-renderer-kramed
+cache: npm
 branches:
   only:
     - master # build master branch only
-install:
-  - npm install hexo-renderer-kramed --save
 script:
-  - hexo clean
   - hexo generate # generate static files
 deploy:
   provider: pages
