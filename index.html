@@ -230,7 +230,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-10-09 04:55:35" itemprop="dateModified" datetime="2019-10-09T04:55:35+00:00">2019-10-09</time>
+                <time title="修改时间：2019-10-09 04:55:55" itemprop="dateModified" datetime="2019-10-09T04:55:55+00:00">2019-10-09</time>
               </span>
             
           
@@ -254,7 +254,6 @@
 <p>但是，stl 自己进行内存管理当然也会产生一定的开销，如果这开销大于直接系统调用产生的开销，那么就得不偿失了。stl 对链表部分采取了一定的优化，其链表直接建立在待分配的内存中，而不再用额外的内存维护一个链表。具体地说，它将每一个内存块的头 <code>8bytes</code>（或者 <code>4bytes</code>，取决于指针的位数）作为指向下一个内存块的指针，当然最后一个内存块除外。当内存块分配给用户时，stl 不再需要管理这块内存，那么整个内存块，包括头 <code>8bytes</code>，自然就可以由用户自由使用了。</p>
 <p>而在实现中，stl 采用的链表结点是这样的：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">union</span> _Obj&#123;</span><br><span class="line">    <span class="keyword">union</span> _Obj* _M_free_list_link;</span><br><span class="line">    <span class="keyword">char</span>        _M_client_data[<span class="number">1</span>];    <span class="comment">// The client sees this.</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
 <p>可以看出，stl 中额外增加了一个 <code>_M_client_data</code> 域，并使用 <code>union</code> 压缩空间。但是整个 stl 都没有用到这个域，从之前的算法描述来看，单个指针也足以实现该功能。对此我找到了两个帖子，相对比较有说服力：</p>
 <ul>
 <li><a href="https://my.oschina.net/u/3281747/blog/875605" target="_blank" rel="noopener">浅析STL空间配置器</a></li>
